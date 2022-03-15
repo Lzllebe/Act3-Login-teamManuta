@@ -21,7 +21,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
               loading= {false}
               
       >
-     
+      <HeaderLottie/>
       <View style= {
         [
           styles.container
