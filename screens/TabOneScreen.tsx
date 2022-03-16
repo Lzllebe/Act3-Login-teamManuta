@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import ViewWithLoading from '../components/ViewWithLoading';
 import { View } from '../components/Themed';
 import { Button } from 'react-native-elements';
-import { TextInput } from 'react-native-paper';
 import HeaderLottie from './HeaderLottie';
+import { TextInput } from 'react-native-paper';
+import { Image } from 'react-native-elements';
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+
+export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'>) {
 
   const [loading,setLoading]=useState<boolean>(false);
   
@@ -16,47 +18,52 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
    setLoading(false)
   }, 5000 );
 
-  return (
+
+  return(
     <ViewWithLoading
               loading= {false}
               
       >
-      <HeaderLottie/>
-      <View style= {
+    <View style= {
+      [
+        styles.container
+      ] }>
+         <View style={
         [
-          styles.container
-        ] }>
-      
-        <Button
-                containerStyle={{
-                  width: 200,
-                  marginLeft: 250,
-                }}
-                title="Sign Up"
-                type="clear"
-                titleStyle={{ color: 'rgba(149, 165, 166)' }}
-        />
+          styles.imagecontainer
+        ]
+      }>
+        <Image source={{uri: 'https://scontent.xx.fbcdn.net/v/t1.15752-9/274827825_3186164488318482_5132147312115164709_n.png?_nc_cat=108&ccb=1-5&_nc_sid=aee45a&_nc_eui2=AeE_NO3cY7M2sPvHjq0u2nhHAgiUoMkbkEICCJSgyRuQQoT7VJEkjjY9pRew4yBNzr4D-DXAQOxnp4z0eBwGAw5v&_nc_ohc=SVbr0bMwmr4AX82CgQx&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVKx2MYbJPordnJsOMI-3R3lpLUZw6_Ks3yuryNx580CAg&oe=6255FBAA'}}
+         style={{width: 350, height: 60}} />
+       </View>
 
-        
-            <Text style={{
-              fontWeight: "bold",
-              fontSize: 25,
-                  color: 'black',
-                  paddingTop: 25,
-                  marginLeft: 50,
-                  marginBottom: 49
-            }}>Log In</Text>
-
-      <View style={
+         <View style={
         [
           styles.textboxcontainer
         ]
       }>
            <TextInput
-            label="Username"
-          />
-      </View>
-      <View style={
+            label="First Name"
+
+       /></View>
+        <View style={
+        [
+          styles.textboxcontainer
+        ]
+      }>
+           <TextInput
+            label="Last Name"
+
+       /></View>
+       <View style={
+        [
+          styles.textboxcontainer
+        ]
+      }>
+           <TextInput
+            label="Email Address"
+       /></View>
+       <View style={
         [
           styles.textboxcontainer
         ]  
@@ -67,139 +74,79 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           right={<TextInput.Icon name="eye" />}
         />
       </View>
-     <View style = {{
+      <View style={
+        [
+          styles.textboxcontainer
+        ]  
+      }>
+          <TextInput
+          label="Retype Password"
+          secureTextEntry
+          right={<TextInput.Icon name="eye" />}
+        />
+      </View>
+
+        <View style = {{
        backgroundColor : '#EEEDDE',
        flexDirection: 'row',
        justifyContent: 'center',
-       marginTop: 10
-     }}><Button
-                title="Log in"
-                loading={false}
-                loadingProps={{ size: 'small', color: 'white' }}
-                buttonStyle={{
-                  backgroundColor: 'black',
-                  borderRadius: 90,
-                }}
-                titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-                containerStyle={{
-               //   marginHorizontal: 50,
-                  height: 50,
-                  width: 300,
-                //  marginVertical: 10,
-                }}
-                onPress={() => console.log('aye')}
-         />
+       marginTop: 5
+        }}> 
+        <Button
+            title="Register"
+            buttonStyle={{ backgroundColor: 'rgba(39, 39, 39, 1)' }}
+            containerStyle={{
+              width: 250,
+              marginHorizontal: 50,
+              marginVertical: 10,
+        }} 
+     titleStyle={{ color: 'white', marginHorizontal: 20 }}
+   />
          </View>
 
-        
-
-          <Text style={{
-          marginTop: 25,
-          fontSize: 15,
-          color: 'black',
-          textAlign: 'center'
-        }}>Or sign in with social account</Text>
-
-         <View style = {{
-            backgroundColor : '#EEEDDE',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: 30,
-            flex: 2
-         }}>
-           <Button
-                title="facebook"
-                icon={{
-                  name: 'user',
-                  type: 'font-awesome',
-                  size: 15,
-                  color: 'white',
-                }}
-                iconRight
-                iconContainerStyle={{ marginLeft: 10 }}
-                titleStyle={{ fontWeight: '700' }}
-                buttonStyle={{
-                  backgroundColor: '#3b5998',
-                  borderColor: 'black',
-                  borderWidth: 1,
-                  borderRadius: 30,
-                }}
-                containerStyle={{
-                  width: 150,
-                  height: 200,
-                  
-             //     marginHorizontal: 50,
-             //     marginVertical: 10,
-                    marginRight: 5
-                }}
-              />
-              <Button
-                title="Google"
-                icon={{
-                  name: 'user',
-                  type: 'font-awesome',
-                  size: 15,
-                  color: 'white',
-                }}
-                iconRight
-                iconContainerStyle={{ marginLeft: 10 }}
-                titleStyle={{ fontWeight: '700' }}
-                buttonStyle={{
-                  backgroundColor: '#FF5252',
-                  borderColor: 'black',
-                  borderWidth: 1,
-                  borderRadius: 30,
-                }}
-                containerStyle={{
-                  width: 150,
-                  height: 200,
-                  
-             //     marginHorizontal: 50,
-              //    marginVertical: 10,
-                    marginRight: 5
-                }}
-              />
-           </View>
-                
-           <View style ={{
+        <View style ={{
         }}> 
          <TouchableOpacity
         style={styles.button}
        >
         <Text style ={{
-          marginTop: 15,
           fontSize: 15,
-          textDecorationLine: 'underline',
-          color: 'black',
+          color: '#B80F0A',
           textAlign: 'center'
-        }} >Forgot Password</Text>
+        }} >I already have an account</Text>
          </TouchableOpacity>
           </View>
-    
-        
+    </View>
+    </ViewWithLoading>
 
-  </View>
-  </ViewWithLoading>
- );
+  )
+  
 }
 
-const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-     flexDirection: 'column',
-    justifyContent: 'flex-start',
-     backgroundColor: '#EEEDDE',
-     paddingTop: 10
-  },
-  textboxcontainer:{
-    marginHorizontal: 25,
-    marginVertical: 10
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#EEEDDE",
-    padding: 10
-  },
-}
-)
-    
+  const styles = StyleSheet.create({
+    container:{
+      flex: 1,
+       flexDirection: 'column',
+      justifyContent: 'flex-start',
+       backgroundColor: '#EEEDDE',
+       paddingTop: 10
+    },
+    textboxcontainer:{
+      marginHorizontal: 28,
+      marginVertical: 6
+    },
+    button: {
+      alignItems: "center",
+      backgroundColor: "#EEEDDE",
+      padding: 10
+    },
+    imagecontainer: {
+      justifyContent: 'center',
+      flexDirection: 'row',
+      alignItems: "center",
+      backgroundColor: "#EEEDDE",
+      marginTop: 25,
+      marginBottom: 20,
+    },
+  }
+  );
