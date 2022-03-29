@@ -1,40 +1,69 @@
-import {  StyleSheet, Text,TouchableOpacity } from 'react-native';
+import {  ScrollView, StyleSheet, Text,TouchableOpacity } from 'react-native';
 import { RootTabScreenProps } from '../types';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import ViewWithLoading from '../components/ViewWithLoading';
 import { View } from '../components/Themed';
-import { Button } from 'react-native-elements';
-import HeaderLottie from './HeaderLottie';
+import { Button, ListItem } from 'react-native-elements';
+import HeaderLottie2 from './HeaderLottie2';
 import { TextInput } from 'react-native-paper';
 import { Image } from 'react-native-elements';
-
+import { Formik } from 'formik';
+import * as yup from "yup";
 
 export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'>) {
 
   const [loading,setLoading]=useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
   
+
+  const registerSchema = yup.object({
+    email: yup.string().required('Email address is required')
+        .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/,
+            'Invalid email address'),
+    password: yup.string().required('Password is required'),
+    firstname: yup.string().required('First Name is required')
+});
 
   setTimeout(() => {
    setLoading(false)
   }, 5000 );
-
-
+  
   return(
     <ViewWithLoading
               loading= {false}
               
       >
-    <View style= {
+    <ScrollView
+      contentContainerStyle= {{flexGrow:1 }}
+      showsVerticalScrollIndicator={false}
+    >
+
+<View style= {
       [
         styles.container
       ] }>
-         <View style={
+         <Formik
+                initialValues={{
+                    firstname:'',
+                    lastname: '',
+                    email: '',
+                    password: '',
+                    retypepassword: ''
+                }}
+                onSubmit={(values, actions) => {
+                  console.log(values);
+                  actions.resetForm();
+                }}
+                validationSchema={registerSchema}
+            >
+                {({ handleChange, handleSubmit, values, touched, errors }) => (
+                  <Fragment>
+                      <View style={
         [
-          styles.imagecontainer
+          styles.lottiecontainer
         ]
       }>
-        <Image source={{uri: 'https://scontent.xx.fbcdn.net/v/t1.15752-9/274827825_3186164488318482_5132147312115164709_n.png?_nc_cat=108&ccb=1-5&_nc_sid=aee45a&_nc_eui2=AeE_NO3cY7M2sPvHjq0u2nhHAgiUoMkbkEICCJSgyRuQQoT7VJEkjjY9pRew4yBNzr4D-DXAQOxnp4z0eBwGAw5v&_nc_ohc=SVbr0bMwmr4AX82CgQx&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVKx2MYbJPordnJsOMI-3R3lpLUZw6_Ks3yuryNx580CAg&oe=6255FBAA'}}
-         style={{width: 350, height: 60}} />
+        <HeaderLottie2/>
        </View>
 
          <View style={
@@ -44,17 +73,47 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
       }>
            <TextInput
             label="First Name"
+            autoComplete={false}
+            value={values.firstname}
+            onChangeText={handleChange('firstname')}
+            mode={"outlined"}
+            
+            autoCapitalize={"none"}
+            autoCorrect={false}
+            autoFocus={true}
+            error={errors.firstname ? true : false}
+        />
+        {errors.firstname &&
+            <Text>
+                {errors.firstname}
+            </Text>
+        }
 
-       /></View>
+       </View>
         <View style={
         [
           styles.textboxcontainer
         ]
       }>
            <TextInput
-            label="Last Name"
+             label="Last Name"
+             autoComplete={false}
+             value={values.lastname}
+             onChangeText={handleChange('lastname')}
+             mode={"outlined"}
+             
+             autoCapitalize={"none"}
+             autoCorrect={false}
+             autoFocus={true}
+             error={errors.lastname ? true : false}
+         />
+         {errors.lastname &&
+             <Text>
+                 {errors.lastname}
+             </Text>
+         }
 
-       /></View>
+        </View>
        <View style={
         [
           styles.textboxcontainer
@@ -62,7 +121,29 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
       }>
            <TextInput
             label="Email Address"
-       /></View>
+            autoComplete={false}
+        
+            value={values.email}
+            onChangeText={handleChange('email')}
+            keyboardType={"email-address"}
+            mode={"outlined"}
+            right={
+                <TextInput.Icon
+                    name={"email"}
+                    color={"blue"}
+                />
+            }
+            autoCapitalize={"none"}
+            autoCorrect={false}
+            autoFocus={true}
+            error={errors.email ? true : false}
+        />
+        {errors.email &&
+            <Text>
+                {errors.email}
+            </Text>
+        }
+       </View>
        <View style={
         [
           styles.textboxcontainer
@@ -70,9 +151,27 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
       }>
           <TextInput
           label="Password"
-          secureTextEntry
-          right={<TextInput.Icon name="eye" />}
-        />
+          autoComplete={false}
+            value={values.password}
+            onChangeText={handleChange('password')}
+            mode={"outlined"}
+              right={
+                    <TextInput.Icon
+                      name={visible ? "eye" : "eye-off"}
+                      onPress={() => {
+                                       setVisible(!visible);
+                                     }}
+                                       color={"black"}
+                                  />
+                                }
+                                secureTextEntry={!visible}
+                                error={errors.password ? true : false}
+                            />
+                            {errors.password &&
+                                <Text>
+                                    {errors.password}
+                                </Text>
+                            }
       </View>
       <View style={
         [
@@ -81,9 +180,27 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
       }>
           <TextInput
           label="Retype Password"
-          secureTextEntry
-          right={<TextInput.Icon name="eye" />}
-        />
+          autoComplete={false}
+            value={values.retypepassword}
+            onChangeText={handleChange('retypepassword')}
+            mode={"outlined"}
+              right={
+                    <TextInput.Icon
+                      name={visible ? "eye" : "eye-off"}
+                      onPress={() => {
+                                       setVisible(!visible);
+                                     }}
+                                       color={"black"}
+                                  />
+                                }
+                                secureTextEntry={!visible}
+                                error={errors.retypepassword ? true : false}
+                            />
+                            {errors.retypepassword &&
+                                <Text>
+                                    {errors.retypepassword}
+                                </Text>
+                            }
       </View>
 
         <View style = {{
@@ -99,7 +216,12 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
               width: 250,
               marginHorizontal: 50,
               marginVertical: 10,
-        }} 
+             
+            }}
+            onPress={() => {
+              handleSubmit();
+              }}
+            loading={loading}
      titleStyle={{ color: 'white', marginHorizontal: 20 }}
    />
          </View>
@@ -116,7 +238,13 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
         }} >I already have an account</Text>
          </TouchableOpacity>
           </View>
+                  </Fragment>
+                     
+                )}
+            </Formik>
     </View>
+
+    </ScrollView>
     </ViewWithLoading>
 
   )
@@ -129,24 +257,29 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
        flexDirection: 'column',
       justifyContent: 'flex-start',
        backgroundColor: '#EEEDDE',
-       paddingTop: 10
     },
     textboxcontainer:{
       marginHorizontal: 28,
-      marginVertical: 6
+      marginVertical: 6,
+      backgroundColor: "#EEEDDE",
     },
     button: {
       alignItems: "center",
       backgroundColor: "#EEEDDE",
       padding: 10
     },
-    imagecontainer: {
-      justifyContent: 'center',
-      flexDirection: 'row',
-      alignItems: "center",
-      backgroundColor: "#EEEDDE",
-      marginTop: 25,
-      marginBottom: 20,
+    lottiecontainer: {
+       alignItems: 'center',
+       flexDirection: 'row',
+       justifyContent: 'center',
+       backgroundColor: '#EEEDDE',
+       marginBottom: 145
+
     },
   }
   );
+
+function handleLogin(email: string, password: string) {
+  throw new Error('Function not implemented.');
+}
+

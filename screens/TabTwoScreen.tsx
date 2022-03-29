@@ -45,6 +45,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       }>
            <TextInput
             label="Username"
+            autoComplete={false}
           />
       </View>
       <View style={
@@ -56,6 +57,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           label="Password"
           secureTextEntry
           right={<TextInput.Icon name="eye" />}
+          autoComplete={false}
         />
       </View>
      <View style = {{
