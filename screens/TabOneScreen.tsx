@@ -18,14 +18,18 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
   
 
   const registerSchema = yup.object({
+    
+    firstname: yup.string().required('First Name is required'),
+    lastname: yup.string().required('Last Name is required'),
     email: yup.string().required('Email address is required')
         .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/,
             'Invalid email address'),
-    firstname: yup.string().required('First Name is required'),
-    lastname: yup.string().required('Last Name is required'),
-    password: yup.string().required('Password is required'),
-    retypepassword: yup.string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    password: yup.string().required('Password is required')
+       .min(8, 'Password is too short - should be 8 chars minimum.')
+       .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+    retypepassword: yup.string().required('Retype Password is required')
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
+
                     
 });
 
@@ -84,13 +88,11 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
             value={values.firstname}
             onChangeText={handleChange('firstname')}
             mode={"outlined"}
-            
-            autoCapitalize={"none"}
-            autoCorrect={false}
             autoFocus={true}
+            autoCapitalize={"none"}
             error={errors.firstname ? true : false}
         />
-        {errors.firstname &&
+        {errors.firstname && 
             <Text>
                 {errors.firstname}
             </Text>
@@ -108,13 +110,10 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
              value={values.lastname}
              onChangeText={handleChange('lastname')}
              mode={"outlined"}
-             
              autoCapitalize={"none"}
-             autoCorrect={false}
-             autoFocus={true}
              error={errors.lastname ? true : false}
          />
-         {errors.lastname &&
+         {errors.lastname && 
              <Text>
                  {errors.lastname}
              </Text>
@@ -142,7 +141,7 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
             }
             autoCapitalize={"none"}
             autoCorrect={false}
-            autoFocus={true}
+            
             error={errors.email ? true : false}
         />
         {errors.email &&
@@ -174,7 +173,7 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
                                 secureTextEntry={!visible}
                                 error={errors.password ? true : false}
                             />
-                            {errors.password &&
+                            {errors.password && 
                                 <Text>
                                     {errors.password}
                                 </Text>
@@ -248,7 +247,9 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
                   </Fragment>
                      
                 )}
+                
             </Formik>
+            
     </View>
 
     </ScrollView>
