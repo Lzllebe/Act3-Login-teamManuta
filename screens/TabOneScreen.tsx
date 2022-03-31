@@ -11,6 +11,7 @@ import { Formik } from 'formik';
 import * as yup from "yup";
 
 export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'>) {
+  
 
   const [loading,setLoading]=useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
@@ -20,9 +21,15 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
     email: yup.string().required('Email address is required')
         .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/,
             'Invalid email address'),
+    firstname: yup.string().required('First Name is required'),
+    lastname: yup.string().required('Last Name is required'),
     password: yup.string().required('Password is required'),
-    firstname: yup.string().required('First Name is required')
+    retypepassword: yup.string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+                    
 });
+
+      
 
   setTimeout(() => {
    setLoading(false)
