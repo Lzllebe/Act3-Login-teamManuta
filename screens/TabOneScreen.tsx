@@ -25,15 +25,11 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
         .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/,
             'Invalid email address'),
     password: yup.string().required('Password is required')
-       .min(8, 'Password is too short - should be 8 chars minimum.')
-       .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+       .min(8, 'Password is too short - should be 8 chars minimum.'),
     retypepassword: yup.string().required('Retype Password is required')
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
-
                     
-});
-
-      
+});   
 
   setTimeout(() => {
    setLoading(false)
@@ -290,4 +286,4 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
 function handleLogin(email: string, password: string) {
   throw new Error('Function not implemented.');
 }
-
+// register screen
