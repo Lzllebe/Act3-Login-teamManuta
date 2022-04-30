@@ -5,6 +5,7 @@ import { Alert, Platform, StyleSheet, View } from "react-native";
 import { ListItem } from "react-native-elements";
 import { fonts } from "react-native-elements/dist/config";
 import { color } from "react-native-elements/dist/helpers";
+import LinearGradient from "react-native-linear-gradient";
 import { IconButton } from "react-native-paper";
 import { white } from "react-native-paper/lib/typescript/styles/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -130,7 +131,7 @@ export default function HomeScreen() {
               <Fragment>
                  {orderList.map ((order: Order , index: number) => (
                    <ListItem key={index} bottomDivider
-                   linearGradientProps={{
+                   linea brGradientProps={{
                     colors: ['#FF9800', '#F44336'],
                     start: { x: 1, y: 0 },
                     end: { x: 0.2, y: 0 },
