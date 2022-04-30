@@ -3,7 +3,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { Button } from "react-native-elements";
-import { DataTable, TextInput } from "react-native-paper";
+import { DataTable, IconButton, TextInput } from "react-native-paper";
 import { number } from "yup/lib/locale";
 import ViewWithLoading from "../../components/ViewWithLoading";
 import { getData, removeData, storeData } from "../../database/StoreData";
@@ -41,9 +41,7 @@ export default function OrderEdit() {
             const json = JSON.parse(orders);
             if (json) {
 
-                let orderValue = json[index];
-                    orderValue = {...data}
-
+                json[index] = {...data};
 
                 const jsonValue = JSON.stringify([...json]);
                 await storeData ('orders', jsonValue);
@@ -57,7 +55,15 @@ export default function OrderEdit() {
     return (
         <ViewWithLoading loading={false}>
 
-            
+            <IconButton style ={styles.icon}
+                icon="arrow-left"
+                color='black'
+                size={30}
+                onPress={() => navigation.navigate("HomeNav", {
+                    screen: "Home",
+                })
+            }
+            />
             <View style = {styles.container }>
 
             <View style ={{
@@ -113,5 +119,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginHorizontal: 20,
     },
+    icon: {
+        marginTop: 20
+    }
 }
 )

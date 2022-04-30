@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { Button } from "react-native-elements";
-import { DataTable, TextInput } from "react-native-paper";
+import { DataTable, IconButton, TextInput } from "react-native-paper";
 import ViewWithLoading from "../../components/ViewWithLoading";
 import { getData, removeData, storeData } from "../../database/StoreData";
 
@@ -35,15 +35,21 @@ export default function OrderAdd() {
              await storeData ('orders', jsonValue);
         }
 
-
     }
 
     
     return (
         <ViewWithLoading loading={false}>
 
-            
+            <IconButton style ={styles.icon}
+                icon="arrow-left"
+                color='black'
+                size={30}
+                onPress={() => console.log('Pressed')}
+            />
             <View style = {styles.container }>
+
+           
 
             <View style ={{
                 marginVertical: 10
@@ -98,5 +104,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginHorizontal: 20,
     },
+    icon: {
+        marginTop: 20
+    }
 }
 )
