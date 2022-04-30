@@ -1,179 +1,291 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import {  ScrollView, StyleSheet, Text,TouchableOpacity } from 'react-native';
 import { RootTabScreenProps } from '../types';
+import React, { Fragment, useState } from 'react';
+import ViewWithLoading from '../components/ViewWithLoading';
+import { View } from '../components/Themed';
+import { Button, ListItem } from 'react-native-elements';
+import HeaderLottie2 from './HeaderLottie2';
+import { TextInput } from 'react-native-paper';
+import { Formik } from 'formik';
+import * as yup from "yup";
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
-  return (
-  // Grand Parent
-  <View style={{
-    flex: 1,
-     flexDirection: 'column',
-   justifyContent: 'flex-start',
-     backgroundColor: '#EEEDDE',
-     paddingTop: 30
-  }}>
-        <Text style={{
-          fontSize: 15,
-              color: 'gray',
-              marginLeft: 270,
-          }}>Sign Up</Text>
+export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'>) {
+  
 
-        <Text style={{
-          fontWeight: "bold",
-          fontSize: 25,
-              color: 'black',
-              paddingTop: 25,
-              marginLeft: 50,
-              marginBottom: 10
-        }}>Log In</Text>
+  const [loading,setLoading]=useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  
 
-      <View style= {{
-        backgroundColor: '#EEEDDE',
-          height: '7%',
-          width: '90%',
-          borderRadius: 15,  
-          marginLeft: 20
-      }}></View>
+  const registerSchema = yup.object({
+    
+    firstname: yup.string().required('First Name is required'),
+    lastname: yup.string().required('Last Name is required'),
+    email: yup.string().required('Email address is required')
+        .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/,
+            'Invalid email address'),
+    password: yup.string().required('Password is required')
+       .min(8, 'Password is too short - should be 8 chars minimum.'),
+    retypepassword: yup.string().required('Retype Password is required')
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
+                    
+});   
 
-        <Text style={{
-        color: 'gray',
-        paddingTop: 10,
-        marginLeft: 50,
-        fontWeight:'900'
-      }}>USERNAME</Text>
+  
 
-        <View style={{
-          backgroundColor: '#EEEDDE',
-          borderBottomWidth: 1,
-          height: '7%',
-          width: '90%',
-          borderRadius: 15, 
-          marginBottom: 10,
-          marginLeft: 20
-      }}></View>
+  setTimeout(() => {
+   setLoading(false)
+  }, 5000 );
+  
+  return(
+    <ViewWithLoading
+              loading= {false}
+              
+      >
+    <ScrollView
+      contentContainerStyle= {{flexGrow:1 }}
+      showsVerticalScrollIndicator={false}
+    >
 
-        <Text style={{
-          color: 'gray',
-          paddingTop: 10,
-          marginLeft: 50,
-        fontWeight:'900'
-        }}>PASSWORD</Text>
+<View style= {
+      [
+        styles.container
+      ] }>
+         <Formik
+                initialValues={{
+                    firstname:'',
+                    lastname: '',
+                    email: '',
+                    password: '',
+                    retypepassword: ''
+                }}
+                onSubmit={(values, actions) => {
+                  console.log(values);
+                  actions.resetForm();
+                }}
+                validationSchema={registerSchema}
+            >
+                {({ handleChange, handleSubmit, values, touched, errors }) => (
+                  <Fragment>
+                      <View style={
+        [
+          styles.lottiecontainer
+        ]
+      }>
+        <HeaderLottie2/>
+       </View>
 
-        <View style= {{
-        backgroundColor: '#EEEDDE',
-        borderBottomWidth: 1,
-          height: '7%',
-          width: '90%',
-          borderRadius: 15,  
-          marginLeft: 20
-      }}></View>
+         <View style={
+        [
+          styles.textboxcontainer
+        ]
+      }>
+           <TextInput
+            label="First Name"
+            autoComplete={false}
+            value={values.firstname}
+            onChangeText={handleChange('firstname')}
+            mode={"outlined"}
+            autoFocus={true}
+            autoCapitalize={"none"}
+            error={errors.firstname ? true : false}
+        />
+        {errors.firstname && 
+            <Text>
+                {errors.firstname}
+            </Text>
+        }
 
-        <View style= {{
-          backgroundColor: 'black',
-          height: '8%',
-          width: '90%',
-          borderRadius: 100,
-          marginTop: 20,
-          marginLeft: 18,
-          alignItems:'center',
-          justifyContent: 'center',
-      }}><Text style={{
-        fontSize: 18,
-        fontWeight:'900',
-        color:'white'
-        }}>Login</Text>
+       </View>
+        <View style={
+        [
+          styles.textboxcontainer
+        ]
+      }>
+           <TextInput
+             label="Last Name"
+             autoComplete={false}
+             value={values.lastname}
+             onChangeText={handleChange('lastname')}
+             mode={"outlined"}
+             autoCapitalize={"none"}
+             error={errors.lastname ? true : false}
+         />
+         {errors.lastname && 
+             <Text>
+                 {errors.lastname}
+             </Text>
+         }
+
         </View>
+       <View style={
+        [
+          styles.textboxcontainer
+        ]
+      }>
+           <TextInput
+            label="Email Address"
+            autoComplete={false}
+        
+            value={values.email}
+            onChangeText={handleChange('email')}
+            keyboardType={"email-address"}
+            mode={"outlined"}
+            right={
+                <TextInput.Icon
+                    name={"email"}
+                    color={"blue"}
+                />
+            }
+            autoCapitalize={"none"}
+            autoCorrect={false}
+            
+            error={errors.email ? true : false}
+        />
+        {errors.email &&
+            <Text>
+                {errors.email}
+            </Text>
+        }
+       </View>
+       <View style={
+        [
+          styles.textboxcontainer
+        ]  
+      }>
+          <TextInput
+          label="Password"
+          autoComplete={false}
+            value={values.password}
+            onChangeText={handleChange('password')}
+            mode={"outlined"}
+              right={
+                    <TextInput.Icon
+                      name={visible ? "eye" : "eye-off"}
+                      onPress={() => {
+                                       setVisible(!visible);
+                                     }}
+                                       color={"black"}
+                                  />
+                                }
+                                secureTextEntry={!visible}
+                                error={errors.password ? true : false}
+                            />
+                            {errors.password && 
+                                <Text>
+                                    {errors.password}
+                                </Text>
+                            }
+      </View>
+      <View style={
+        [
+          styles.textboxcontainer
+        ]  
+      }>
+          <TextInput
+          label="Retype Password"
+          autoComplete={false}
+            value={values.retypepassword}
+            onChangeText={handleChange('retypepassword')}
+            mode={"outlined"}
+              right={
+                    <TextInput.Icon
+                      name={visible ? "eye" : "eye-off"}
+                      onPress={() => {
+                                       setVisible(!visible);
+                                     }}
+                                       color={"black"}
+                                  />
+                                }
+                                secureTextEntry={!visible}
+                                error={errors.retypepassword ? true : false}
+                            />
+                            {errors.retypepassword &&
+                                <Text>
+                                    {errors.retypepassword}
+                                </Text>
+                            }
+      </View>
 
-        <Text style={{
-          marginTop: 15,
+        <View style = {{
+       backgroundColor : '#EEEDDE',
+       flexDirection: 'row',
+       justifyContent: 'center',
+       marginTop: 5
+        }}> 
+        <Button
+            title="Register"
+            buttonStyle={{ backgroundColor: 'rgba(39, 39, 39, 1)' }}
+            containerStyle={{
+              width: 250,
+              marginHorizontal: 50,
+              marginVertical: 10,
+             
+            }}
+            onPress={() => {
+              handleSubmit();
+              }}
+            loading={loading}
+     titleStyle={{ color: 'white', marginHorizontal: 20 }}
+   />
+         </View>
+
+        <View style ={{
+        }}> 
+         <TouchableOpacity
+        style={styles.button}
+       >
+        <Text style ={{
           fontSize: 15,
-          textDecorationLine: 'underline',
-          color: 'black',
+          color: '#B80F0A',
           textAlign: 'center'
-        }}>Forgot Password</Text>
-
-        <Text style={{
-          marginTop: 25,
-          fontSize: 15,
-          color: 'black',
-          textAlign: 'center'
-        }}>Or sign up with social account</Text>
-
-       <View style= {{
-              //Code for FB Button and Google Button Design (Batang ina with kambal kids)
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              backgroundColor: '#EEEDDE',
-              width: '100%',
-              height: '100%',
-              marginTop: 25,
-              paddingRight: 20,
-              paddingLeft:2
-            }}>
-                    <View style= {{
-                      // Facebook Button Circle (child 1 ni batang ina)
-                        backgroundColor: '#EEEDDE',
-                        borderTopWidth: 1,
-                        borderBottomWidth: 1,
-                        borderLeftWidth: 1,
-                        borderRightWidth: 1,
-                        height: '9%',
-                        width: '43%',
-                        borderRadius: 100,
-                        alignItems:'center',
-                        justifyContent: 'center',
-                    }}> 
-                            <Text style={{
-                              //Text FB code (apo)
-                                color: 'black',
-                                fontSize: 15, 
-                                fontWeight:'900'
-                            }}>Facebook</Text>
-                    </View>
-      
-                    <View style= {{
-                      // Google Button Circle (child 2 ni batang ina)
-                        backgroundColor: '#EEEDDE',
-                        borderTopWidth: 1,
-                        borderBottomWidth: 1,
-                        borderLeftWidth: 1,
-                        borderRightWidth: 1,
-                        height: '9%',
-                        width: '43%',
-                        borderRadius: 100,
-                        alignItems:'center',
-                        justifyContent: 'center',
-                    }}>     
-                            <Text style={{
-                              //Text Google code (apo)
-                                color: 'black',
-                                fontSize: 15,
-                                fontWeight:'900'
-                            }}>Google</Text>
-                    </View>
-        </View>
-
+        }} >I already have an account</Text>
+         </TouchableOpacity>
+          </View>
+                  </Fragment>
+                     
+                )}
+                
+            </Formik>
+            
     </View>
- );
+
+    </ScrollView>
+    </ViewWithLoading>
+
+  )
+  
 }
 
- 
-     
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+  const styles = StyleSheet.create({
+    container:{
+      flex: 1,
+       flexDirection: 'column',
+      justifyContent: 'flex-start',
+       backgroundColor: '#EEEDDE',
+    },
+    textboxcontainer:{
+      marginHorizontal: 28,
+      marginVertical: 6,
+      backgroundColor: "#EEEDDE",
+    },
+    button: {
+      alignItems: "center",
+      backgroundColor: "#EEEDDE",
+      padding: 10
+    },
+    lottiecontainer: {
+       alignItems: 'center',
+       flexDirection: 'row',
+       justifyContent: 'center',
+       backgroundColor: '#EEEDDE',
+       marginBottom: 145
+
+    },
+  }
+  );
+
+function handleLogin(email: string, password: string) {
+  throw new Error('Function not implemented.');
+}
+// register screen
+

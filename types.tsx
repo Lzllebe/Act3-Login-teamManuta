@@ -6,6 +6,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Order } from './models/Order';
 
 declare global {
   namespace ReactNavigation {
@@ -14,9 +15,9 @@ declare global {
 }
 
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Modal: undefined;
-  NotFound: undefined;
+  WelcomeNav: undefined;
+  HomeNav: undefined;
+  OrderNav: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -29,7 +30,25 @@ export type RootTabParamList = {
   TabTwo: undefined;
 };
 
+
+
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+export type WelcomeParamlist = {
+  Welcome: undefined
+}
+
+export type HomeParamlist = {
+  Home: undefined
+}
+
+export type OrderParamlist = {
+  OrderAdd: undefined
+  OrderEdit: {
+     order: Order;
+     index: number;
+  }
+}
