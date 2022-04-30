@@ -19,7 +19,7 @@ export default function OrderEdit() {
     const route = useRoute<RouteProp<IRoute, "params">>();
     //console.log(route.params.order);
     const order = route.params.order;
-    const index = route.params.order;
+    const index = route.params.index;
 
     const [table, setTable] = useState<string>(order.table);
     const [prefOrder, setprefOrder] = useState<string>(order.prefOrder);
@@ -42,8 +42,7 @@ export default function OrderEdit() {
             if (json) {
 
                 let orderValue = json[index];
-                    orderValue.table = data.table;
-                    orderValue.prefOrder = data.prefOrder;
+                    orderValue = {...data}
 
 
                 const jsonValue = JSON.stringify([...json]);

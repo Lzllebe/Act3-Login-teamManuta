@@ -14,6 +14,7 @@ import ViewWithLoading from "../../components/ViewWithLoading";
 import { getData, storeData } from "../../database/StoreData";
 import { Order } from "../../models/Order";
 
+
 export default function HomeScreen() {
     
   const navigation = useNavigation();
@@ -129,6 +130,12 @@ export default function HomeScreen() {
               <Fragment>
                  {orderList.map ((order: Order , index: number) => (
                    <ListItem key={index} bottomDivider
+                   linearGradientProps={{
+                    colors: ['#FF9800', '#F44336'],
+                    start: { x: 1, y: 0 },
+                    end: { x: 0.2, y: 0 },
+                  }}
+                  ViewComponent={LinearGradient}
                    onLongPress = {() => {
                       deleteOrder(index);
                    }}
@@ -197,7 +204,7 @@ const styles = StyleSheet.create({
          flexDirection: 'column',
          backgroundColor: 'white',
          borderTopRightRadius: 80,
-         paddingTop: 80,
+         paddingTop: 41,
          paddingHorizontal: 10,
       },
               
