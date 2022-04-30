@@ -17,7 +17,10 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import HomeNavigator from './HomeNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+import OrderNavigator from './OrderNavigator';
+import WelcomeNavigator from './WelcomeNavigator';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -38,12 +41,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
+      <Stack.Screen name="WelcomeNav" component={WelcomeNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name= "HomeNav" component={HomeNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name= "OrderNav" component={OrderNavigator} options={{ headerShown: false }} />
+      </Stack.Navigator>
   );
 }
 
@@ -61,6 +62,7 @@ function BottomTabNavigator() {
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerShown: false,
       }}>
       <BottomTab.Screen
         name="TabOne"
@@ -70,8 +72,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
+                style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
               <FontAwesome
@@ -80,7 +81,7 @@ function BottomTabNavigator() {
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
               />
-            </Pressable>
+            </Pressable> 
           ),
         })}
       />

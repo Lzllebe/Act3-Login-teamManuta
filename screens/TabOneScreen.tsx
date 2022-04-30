@@ -6,7 +6,6 @@ import { View } from '../components/Themed';
 import { Button, ListItem } from 'react-native-elements';
 import HeaderLottie2 from './HeaderLottie2';
 import { TextInput } from 'react-native-paper';
-import { Image } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as yup from "yup";
 
@@ -30,6 +29,8 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabTwo'
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
                     
 });   
+
+  
 
   setTimeout(() => {
    setLoading(false)
@@ -287,3 +288,4 @@ function handleLogin(email: string, password: string) {
   throw new Error('Function not implemented.');
 }
 // register screen
+

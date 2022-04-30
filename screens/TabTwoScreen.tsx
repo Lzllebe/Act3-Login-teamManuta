@@ -3,9 +3,8 @@ import { RootTabScreenProps } from '../types';
 import React, { useState } from 'react';
 import ViewWithLoading from '../components/ViewWithLoading';
 import { View } from '../components/Themed';
-import { Button } from 'react-native-elements';
-import HeaderLottie from './HeaderLottie';
 import { TextInput } from 'react-native-paper';
+
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
 
@@ -21,177 +20,79 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
               loading= {false}
               
       >
-     
-      <View style= {
-        [
-          styles.container
-        ] }>
+       <View style={
+          [
+             styles.container1
+          ]
+        }>
+            <View style={
+          [
+            styles.conradius1
+          ]
+        }>
+
       
-        <Button
-                containerStyle={{
-                  width: 200,
-                  marginLeft: 250,
-                }}
-                title="Sign Up"
-                type="clear"
-                titleStyle={{ color: 'rgb(149, 165, 166)' }}
-        />
-
-        <HeaderLottie/>
-      <View style={
-        [
-          styles.textboxcontainer
-        ]
-      }>
-           <TextInput
-            label="Username"
+        </View>
+      
+        </View>
+        <View style={
+          [
+             styles.container2
+          ]
+        }>
+          <View style={
+          [
+            styles.conradius2
+          ]
+        }>
+            {/* <TextInput
+            label="Email Address"
             autoComplete={false}
-          />
-      </View>
-      <View style={
-        [
-          styles.textboxcontainer
-        ]  
-      }>
-          <TextInput
-          label="Password"
-          secureTextEntry
-          right={<TextInput.Icon name="eye" />}
-          autoComplete={false}
-        />
-      </View>
-     <View style = {{
-       backgroundColor : '#EEEDDE',
-       flexDirection: 'row',
-       justifyContent: 'center',
-       marginTop: 10
-     }}><Button
-                title="Log in"
-                loading={false}
-                loadingProps={{ size: 'small', color: 'white' }}
-                buttonStyle={{
-                  backgroundColor: 'black',
-                  borderRadius: 90,
-                }}
-                titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
-                containerStyle={{
-               //   marginHorizontal: 50,
-                  height: 50,
-                  width: 300,
-                //  marginVertical: 10,
-                }}
-                onPress={() => console.log('aye')}
-         />
-         </View>
-
-        
-
-          <Text style={{
-          marginTop: 25,
-          fontSize: 15,
-          color: 'black',
-          textAlign: 'center'
-        }}>Or sign in with social account</Text>
-
-         <View style = {{
-            backgroundColor : '#EEEDDE',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: 30,
-            flex: 2
-         }}>
-           <Button
-                title="facebook"
-                icon={{
-                  name: 'user',
-                  type: 'font-awesome',
-                  size: 15,
-                  color: 'white',
-                }}
-                iconRight
-                iconContainerStyle={{ marginLeft: 10 }}
-                titleStyle={{ fontWeight: '700' }}
-                buttonStyle={{
-                  backgroundColor: '#3b5998',
-                  borderColor: 'black',
-                  borderWidth: 1,
-                  borderRadius: 30,
-                }}
-                containerStyle={{
-                  width: 150,
-                  height: 200,
-                  
-             //     marginHorizontal: 50,
-             //     marginVertical: 10,
-                    marginRight: 5
-                }}
-              />
-              <Button
-                title="Google"
-                icon={{
-                  name: 'user',
-                  type: 'font-awesome',
-                  size: 15,
-                  color: 'white',
-                }}
-                iconRight
-                iconContainerStyle={{ marginLeft: 10 }}
-                titleStyle={{ fontWeight: '700' }}
-                buttonStyle={{
-                  backgroundColor: '#FF5252',
-                  borderColor: 'black',
-                  borderWidth: 1,
-                  borderRadius: 30,
-                }}
-                containerStyle={{
-                  width: 150,
-                  height: 200,
-                  
-             //     marginHorizontal: 50,
-              //    marginVertical: 10,
-                    marginRight: 5
-                }}
-              />
-           </View>
-                
-           <View style ={{
-        }}> 
-         <TouchableOpacity
-        style={styles.button}
-       >
-        <Text style ={{
-          marginTop: 15,
-          fontSize: 15,
-          textDecorationLine: 'underline',
-          color: 'black',
-          textAlign: 'center'
-        }} >Forgot Password</Text>
-         </TouchableOpacity>
-          </View>
-    
-        
-
-  </View>
+            keyboardType={"email-address"}
+            mode={"outlined"}
+            right={
+                <TextInput.Icon
+                    name={"email"}
+                    color={"blue"}
+                />
+            }
+            autoCapitalize={"none"}
+            autoCorrect={false}
+        /> */}
+      
+        </View>
+      
+        </View>
+      
   </ViewWithLoading>
  );
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex: 1,
+  container1:{
+    flex:1.1,
      flexDirection: 'column',
-    justifyContent: 'flex-start',
-     backgroundColor: '#EEEDDE',
-     paddingTop: 10
+     backgroundColor: '#191d40',
+    
+  
   },
-  textboxcontainer:{
-    marginHorizontal: 25,
-    marginVertical: 10
+  conradius1:{
+    flex:1.1,
+     flexDirection: 'column',
+     backgroundColor: 'white',
+     borderBottomRightRadius: 100
   },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#EEEDDE",
-    padding: 10
+
+  container2:{
+    flex: 1.2,
+    backgroundColor: 'white',
+    
+  },
+  conradius2:{
+    flex:1,
+     flexDirection: 'column',
+     backgroundColor: '#191d40',
+     borderTopLeftRadius: 100
   },
 }
 )
