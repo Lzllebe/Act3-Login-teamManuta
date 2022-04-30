@@ -1,21 +1,38 @@
 
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { Button } from "react-native-elements";
 import { DataTable, TextInput } from "react-native-paper";
+import { number } from "yup/lib/locale";
 import ViewWithLoading from "../../components/ViewWithLoading";
 import { getData, removeData, storeData } from "../../database/StoreData";
+import { OrderParamlist } from "../../types";
+
+type IRoute = {
+    "params": OrderParamlist['OrderEdit']
+}
+
 
 export default function OrderEdit() {
-    const [table, setTable] = useState<string>("");
-    const [order, setOrder] = useState<string>("");
     
+    const route = useRoute<RouteProp<IRoute, "params">>();
+    //console.log(route.params.order);
+    const order = route.params.order;
+    const index = route.params.order;
+
+    const [table, setTable] = useState<string>(order.table);
+    const [prefOrder, setprefOrder] = useState<string>(order.prefOrder);
+    const navigation = useNavigation();
+    
+
+
     const submit = async () => {
         const orders = await getData ('orders');
        
         const data = {
-            Table : table,
-            Order: order,
+            table : table,
+            prefOrder: prefOrder,
         }
        
         // await removeData('orders')
@@ -23,16 +40,15 @@ export default function OrderEdit() {
         if (orders) {
             const json = JSON.parse(orders);
             if (json) {
-                const jsonValue = JSON.stringify([...json, data]);
+
+                let orderValue = json[index];
+                    orderValue.table = data.table;
+                    orderValue.prefOrder = data.prefOrder;
+
+
+                const jsonValue = JSON.stringify([...json]);
                 await storeData ('orders', jsonValue);
             }
-        }else{
-             //Order null value
-              
-
-            const jsonValue = JSON.stringify([data]);
-
-             await storeData ('orders', jsonValue);
         }
 
 
@@ -61,14 +77,14 @@ export default function OrderEdit() {
             }}>
                  <TextInput
                 label="Order List"
-                value={order}
-                onChangeText={setOrder}
+                value={prefOrder}
+                onChangeText={setprefOrder}
                 autoComplete = {false}
                 />
             </View>
            
             <Button
-              title= "Add Order"
+              title= "Edit Order"
               loading={false}
               loadingProps={{ size: 'small', color: 'white' }}
               buttonStyle={{
