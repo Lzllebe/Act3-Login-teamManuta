@@ -135,7 +135,7 @@ export default function HomeScreen() {
                       onPress = {()=> {
                         navigation.navigate("OrderNav", {
                           screen: "OrderEdit" ,
-                          params: { order:order, index: index }
+                          params: { order: order, index: index }
                         })
                       }}
                         
