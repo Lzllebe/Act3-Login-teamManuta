@@ -32,6 +32,8 @@
     "lottie-react-native": "^5.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-floating-action-button": "^1.0.5",
+    "react-floating-button": "^1.1.1",
     "react-native": "0.64.3",
     "react-native-elements": "^3.4.2",
     "react-native-linear-gradient": "^2.5.6",

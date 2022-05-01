@@ -1,26 +1,24 @@
-import { FontAwesome } from "@expo/vector-icons";
+
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { Fragment, useCallback, useState } from "react";
-import { Alert, Platform, StyleSheet, View } from "react-native";
-import { ListItem } from "react-native-elements";
-import { fonts } from "react-native-elements/dist/config";
-import { color } from "react-native-elements/dist/helpers";
+import { Alert, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, ListItem } from "react-native-elements";
 
-import { IconButton } from "react-native-paper";
-import { white } from "react-native-paper/lib/typescript/styles/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { number } from "yup";
+
 import { Text } from "../../components/Themed";
 import ViewWithLoading from "../../components/ViewWithLoading";
 import { getData, storeData } from "../../database/StoreData";
 import { Order } from "../../models/Order";
+import { FAB } from "react-native-elements";
 
 
 export default function HomeScreen() {
-    
+
   const navigation = useNavigation();
   const [orderList,setOrderList] = useState<Array<Order> | null >(null);
   const [loading, setLoading] = useState <boolean> (false);
+
 
   const retrieveData = async () => {
     setLoading(true);
@@ -87,32 +85,43 @@ export default function HomeScreen() {
             styles.conradius1
           ]
         }>
-          
-             <Text style = {{
+        
+
+              <Text style = {{
              color: 'white',
              fontWeight: 'bold',
-             fontSize: 30,
+             fontSize: 40,
              fontFamily: 'sans-serif-condensed',
-             paddingTop: 5,
-             alignSelf: 'center',
+             textAlign: 'center',
+           
+            
            }}>
-             Orders
-           </Text>
+             Customer Orders
+            
+           </Text> 
+          <View style = {{
+             flexDirection: 'row',
+             justifyContent: 'flex-end',
+             display: 'flex',
+            
+            
+           }}>
+           {/* <IconButton style ={{
+             alignSelf: 'center'   
+             
+          }}
+           icon="plus"
+           color= 'red'
+           size={40}
+           
+           onPress={() => navigation.navigate("OrderNav", {
+             screen: "OrderAdd",
+         })
+           }
+         /> */}
+           </View> 
           
            
-           
-          
-           <IconButton style ={{
-             alignSelf: 'flex-end',
-           }}
-            icon="plus"
-            color= 'white'
-            size={45}
-            onPress={() => navigation.navigate("OrderNav", {
-              screen: "OrderAdd",
-          })
-            }
-          />
           
         </View>
       
@@ -122,16 +131,20 @@ export default function HomeScreen() {
              styles.container2
           ]
         }>
+          <ScrollView
+            contentContainerStyle= {{flexGrow:1 }}
+            showsVerticalScrollIndicator={false}
+           >
           <View style={
           [
             styles.conradius2
           ]
         }>
+          
            {orderList ?
               <Fragment>
                  {orderList.map ((order: Order , index: number) => (
                    <ListItem key={index} bottomDivider
-                   
                    onLongPress = {() => {
                       deleteOrder(index);
                    }}
@@ -141,9 +154,7 @@ export default function HomeScreen() {
                           params: { order: order, index: index }
                         })
                       }}
-                        
                    >
-                     
                     <ListItem.Content>
                      <ListItem.Title>{order.table}</ListItem.Title>
                      <ListItem.Subtitle>{order.prefOrder}</ListItem.Subtitle>
@@ -156,12 +167,25 @@ export default function HomeScreen() {
               <Text></Text>
           }
             
-              
-                      
-             
+        </View> 
+        </ScrollView>
+        
+        
+       <FAB
+          
+          icon={{ name: 'add', color: 'white' }}
+          color="#f5516a"
+          placement="right"
+          onPress={() => navigation.navigate("OrderNav", {
+            screen: "OrderAdd",
+        })
+          }
+        />
+        
+        
+    
         </View>
-      
-        </View>
+        
       
         </ViewWithLoading>
         </SafeAreaView>
@@ -176,22 +200,20 @@ const styles = StyleSheet.create({
         
     },
     container1:{
-        flex:1,
-         flexDirection: 'column',
+        flex:0.9,  
          backgroundColor: 'white',
-        
-      
+
       },
       conradius1:{ //title, icon 
         flex:1,
-         flexDirection: 'column',
          backgroundColor: '#191d40',
          borderBottomLeftRadius: 80,
+         justifyContent: 'center'
            
       },
     
       container2:{
-        flex: 5,
+        flex: 7,
         backgroundColor: '#191d40',
         
       },
@@ -201,7 +223,8 @@ const styles = StyleSheet.create({
          backgroundColor: 'white',
          borderTopRightRadius: 80,
          paddingTop: 41,
-         paddingHorizontal: 10,
+         paddingHorizontal: 15,
+         paddingBottom: 15,
       },
               
     }

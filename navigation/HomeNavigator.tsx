@@ -10,12 +10,16 @@ export default function HomeNavigator() {
   return (
     <Stack.Navigator 
      screenOptions={{
-       headerShown:false,
+       headerShown: false,
      }}
     >
       <Stack.Screen 
       name="Home" 
-      component={HomeScreen} />
+      component={HomeScreen}
+      options={{
+        title: 'Home',
+      }} />
+     
       </Stack.Navigator>
   );
 }

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { Button } from "react-native-elements";
 import { DataTable, IconButton, TextInput } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { number } from "yup/lib/locale";
 import ViewWithLoading from "../../components/ViewWithLoading";
 import { getData, removeData, storeData } from "../../database/StoreData";
@@ -53,6 +54,7 @@ export default function OrderEdit() {
 
     
     return (
+        <SafeAreaView style ={styles.container1}>
         <ViewWithLoading loading={false}>
 
             <IconButton style ={styles.icon}
@@ -109,6 +111,7 @@ export default function OrderEdit() {
 
             </View>
         </ViewWithLoading>
+        </SafeAreaView>
     );
 
 }
@@ -118,6 +121,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         marginHorizontal: 20,
+    },
+    container1: {
+        flex: 1,
+          
     },
     icon: {
         marginTop: 20

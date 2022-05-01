@@ -4,6 +4,7 @@ import { Platform, StyleSheet, View, Text, Alert } from "react-native";
 import { Button } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ViewWithLoading from "../../components/ViewWithLoading";
+import HeaderLottieProject from "../HeaderLottieProject";
 
 export default function WelcomeScreen() {
 
@@ -22,7 +23,7 @@ export default function WelcomeScreen() {
             styles.conradius1
           ]
         }>
-
+          <HeaderLottieProject/>
       
         </View>
       
@@ -39,11 +40,24 @@ export default function WelcomeScreen() {
         }>
             <View style={[styles.text]} >
             <Text style = {{
+                textAlign: 'left',
                 color: 'white',
                 fontWeight: 'bold',
-                fontSize: 40
+                fontSize: 45,
+                marginBottom: 10
+                
             }} >
-                Welcome! Chef Assistant
+               Welcome! Chef Assistant
+            </Text>
+            <Text style = {{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: 10,
+                
+                
+            }} >
+              Are you ready to receive orders from the customers? If yes then...
             </Text>
 
             </View>
@@ -118,12 +132,12 @@ const styles = StyleSheet.create({
          backgroundColor: '#191d40',
          borderTopLeftRadius: 100,
          alignItems: 'center',
-         paddingVertical: 50,
+         justifyContent: 'center',
+         
       },
       text:{
-          alignSelf: 'center',
-          marginTop: 20,
-          marginBottom: 10
+          justifyContent: 'center',
+          marginBottom: 10,
       },
         
     }

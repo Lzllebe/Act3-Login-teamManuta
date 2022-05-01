@@ -1,14 +1,17 @@
 
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { Button } from "react-native-elements";
 import { DataTable, IconButton, TextInput } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import ViewWithLoading from "../../components/ViewWithLoading";
 import { getData, removeData, storeData } from "../../database/StoreData";
 
 export default function OrderAdd() {
     const [table, setTable] = useState<string>("");
     const [prefOrder, setprefOrder] = useState<string>("");
+    const navigation = useNavigation();
     
     const submit = async () => {
         const orders = await getData ('orders');
@@ -39,13 +42,17 @@ export default function OrderAdd() {
 
     
     return (
+        <SafeAreaView style ={styles.container1}>
         <ViewWithLoading loading={false}>
 
             <IconButton style ={styles.icon}
                 icon="arrow-left"
                 color='black'
                 size={30}
-                onPress={() => console.log('Pressed')}
+                onPress={() => navigation.navigate("HomeNav", {
+                    screen: "Home",
+                })
+                  }
             />
             <View style = {styles.container }>
 
@@ -94,6 +101,7 @@ export default function OrderAdd() {
 
             </View>
         </ViewWithLoading>
+        </SafeAreaView>
     );
 
 }
@@ -103,6 +111,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         marginHorizontal: 20,
+    },
+    container1: {
+        flex: 1,
+          
     },
     icon: {
         marginTop: 20
