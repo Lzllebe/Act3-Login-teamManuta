@@ -21,6 +21,7 @@ export default function HomeScreen() {
 
 
   const retrieveData = async () => {
+    
     setLoading(true);
 
     const orders = await getData ('orders');
@@ -156,8 +157,8 @@ export default function HomeScreen() {
                       }}
                    >
                     <ListItem.Content>
-                     <ListItem.Title>{order.table}</ListItem.Title>
-                     <ListItem.Subtitle>{order.prefOrder}</ListItem.Subtitle>
+                      <ListItem.Title>{order.table}</ListItem.Title>
+                     <ListItem.Subtitle>{order.prefOrder}</ListItem.Subtitle> 
                    </ListItem.Content>
                    <ListItem.Chevron/>
                    </ListItem>

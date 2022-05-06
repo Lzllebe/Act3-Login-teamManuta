@@ -1,7 +1,7 @@
 
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { Button } from "react-native-elements";
 import { DataTable, IconButton, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -56,7 +56,10 @@ export default function OrderEdit() {
     return (
         <SafeAreaView style ={styles.container1}>
         <ViewWithLoading loading={false}>
-
+        <ScrollView
+            contentContainerStyle= {{flexGrow:1 }}
+            showsVerticalScrollIndicator={false}
+           >
             <IconButton style ={styles.icon}
                 icon="arrow-left"
                 color='black'
@@ -76,6 +79,7 @@ export default function OrderEdit() {
                 value={table}
                 onChangeText={setTable}
                 autoComplete = {false}
+                keyboardType = 'numeric'
             />
             </View>
            
@@ -87,6 +91,10 @@ export default function OrderEdit() {
                 value={prefOrder}
                 onChangeText={setprefOrder}
                 autoComplete = {false}
+                multiline
+                numberOfLines={10}
+                scrollEnabled
+                
                 />
             </View>
            
@@ -110,6 +118,7 @@ export default function OrderEdit() {
             />
 
             </View>
+            </ScrollView>
         </ViewWithLoading>
         </SafeAreaView>
     );
